@@ -1,0 +1,6 @@
+﻿  Building Custom Rule C:/Users/honghaolin/Documents/K_LearnOpenGL/glfw-3.3.8/tests/CMakeLists.txt
+  monitors.c
+  getopt.c
+  glad_gl.c
+  Generating Code...
+  monitors.vcxproj -> C:\Users\honghaolin\Documents\K_LearnOpenGL\glfw-3.3.8\build\tests\Debug\monitors.exe

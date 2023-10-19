@@ -1,0 +1,6 @@
+﻿  Building Custom Rule C:/Users/honghaolin/Documents/K_LearnOpenGL/glfw-3.3.8/tests/CMakeLists.txt
+  title.c
+C:\Users\honghaolin\Documents\K_LearnOpenGL\glfw-3.3.8\tests\title.c(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+  glad_gl.c
+  Generating Code...
+  title.vcxproj -> C:\Users\honghaolin\Documents\K_LearnOpenGL\glfw-3.3.8\build\tests\Debug\title.exe
