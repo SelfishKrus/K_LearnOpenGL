@@ -1,1 +1,2 @@
 D:\K_LearnOpenGL\K_LearnOpenGL\Debug\K_LearnOpenGL.exe
+D:\K_LearnOpenGL\Debug\K_LearnOpenGL.exe
