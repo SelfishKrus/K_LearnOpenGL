@@ -156,23 +156,37 @@ int main(void)
 
     std::cout << glGetString(GL_VERSION) << std::endl;
 
-    float positions[6] = {
+    float positions[8] = {
 		-0.5f, -0.5f, // 0
-		 0.0f,  0.5f, // 1
-		 0.5f, -0.5f  // 2
+		 0.5f,  -0.5f, // 1
+		 0.5f, 0.5f,  // 2
+         -0.5f, 0.5f  // 3
+	};
+
+    unsigned int indices[] = {
+		0, 1, 2,
+		2, 3, 0
 	};
 
     unsigned int buffer;
     glGenBuffers(1, &buffer); // Generate 1 buffer, store it in buffer
     glBindBuffer(GL_ARRAY_BUFFER, buffer); // Select buffer
-    glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW); // Fill buffer with data
+    glBufferData(GL_ARRAY_BUFFER, 6 * 2 * sizeof(float), positions, GL_STATIC_DRAW); // Fill buffer with data
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
 
+<<<<<<< Updated upstream
 <<<<<<< HEAD
     glBindBuffer(GL_ARRAY_BUFFER, 0); // Unbind buffer
 =======
+=======
+    unsigned int ibo;
+    glGenBuffers(1, &ibo); // Generate 1 buffer, store it in buffer
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo); // Select buffer
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW); // Fill buffer with data
+
+>>>>>>> Stashed changes
     // print shaders
     ShaderProgramSource source = ParseShader("res/shaders/Basic.shader");
     std::cout << "VERTEX" << std::endl;
@@ -190,8 +204,7 @@ int main(void)
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // Test
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
