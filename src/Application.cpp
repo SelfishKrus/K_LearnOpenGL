@@ -11,11 +11,13 @@
     x;\
 	ASSERT(GLLogCall(#x, __FILE__, __LINE__))
 
+// Keep printing errors
 static void GLClearError()
 {
     while (glGetError() != GL_NO_ERROR);
 }
 
+// Error handling
 static bool GLLogCall(const char* function, const char* file, int line)
 {
     while (GLenum error = glGetError())
@@ -129,6 +131,8 @@ int main(void)
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
 
+    glfwSwapInterval(1); // Enable vsync
+
     // glewInit has to be done in the context 
     if (glewInit() != GLEW_OK)
 		std::cout << "Error!" << std::endl; 
@@ -171,6 +175,11 @@ int main(void)
 
     unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
     glUseProgram(shader);
+
+    // Transfer u_Color to shader
+    int location = glGetUniformLocation(shader, "u_Color"); // ptr
+    ASSERT(location != -1);
+    glUniform4f(location, 1.0f, 0.0f, 0.0f, 1.0f); // vram size and data
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
