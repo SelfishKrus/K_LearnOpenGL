@@ -120,6 +120,10 @@ int main(void)
     if (!glfwInit())
         return -1;
 
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
+
     /* Create a windowed mode window and its OpenGL context */
     window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
     if (!window)
@@ -130,7 +134,7 @@ int main(void)
 
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
-
+     
     glfwSwapInterval(1); // Enable vsync
 
     // glewInit has to be done in the context 
@@ -151,13 +155,20 @@ int main(void)
 		2, 3, 0
 	};
 
+    // vertex array object
+    // for core profile
+    // not necessary for compatibility profile
+    unsigned int vao;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+
     unsigned int buffer;
     glGenBuffers(1, &buffer); // Generate 1 buffer, store it in buffer
     glBindBuffer(GL_ARRAY_BUFFER, buffer); // Select buffer
-    glBufferData(GL_ARRAY_BUFFER, 6 * 2 * sizeof(float), positions, GL_STATIC_DRAW); // Fill buffer with data
+    glBufferData(GL_ARRAY_BUFFER, 4 * 2 * sizeof(float), positions, GL_STATIC_DRAW); // Fill buffer with data
 
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0); // link vertex array to buffer
 
     glBindBuffer(GL_ARRAY_BUFFER, 0); // Unbind buffer
 
@@ -181,11 +192,23 @@ int main(void)
     ASSERT(location != -1);
     glUniform4f(location, 1.0f, 0.0f, 0.0f, 1.0f); // vram size and data
 
+    // unbind everything
+    glBindVertexArray(0);
+    glUseProgram(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
+
+        glUseProgram(shader); 
+        glUniform4f(location, 1.0f, 1.0f, 0.0f, 1.0f);
+
+        glBindVertexArray(vao);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
