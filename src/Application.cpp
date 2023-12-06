@@ -9,6 +9,7 @@
 #include "Renderer.h"
 
 #include "VertexBuffer.h"
+#include "VertexBufferLayout.h"
 #include "IndexBuffer.h"
 #include "VertexArray.h"
 #include "Shader.h"
@@ -79,6 +80,8 @@ int main(void)
         vb.Unbind();
         ib.Unbind();
 
+        Renderer renderer;
+
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
         {
@@ -88,9 +91,7 @@ int main(void)
             shader.Bind();
             shader.SetUniform4f("u_Color", 0.0f, 0.0f, 1.0f, 1.0f);
 
-
-            va.Bind();
-            ib.Bind();
+            renderer.Draw(va, ib, shader);
 
             GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 
